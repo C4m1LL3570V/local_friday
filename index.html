@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programme LOCAL FRIDAY - Biocoop Jean Jaurès</title>
+  <style>
+    /* Design Biocoop */
+    :root { --bio-blue: #143d8d; --bio-green: #85b91e; --bio-yellow: #f4aa00; --light-bg: #f4f7f6; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--light-bg); color: #333; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: auto; }
+    
+    .header { text-align: center; margin-bottom: 30px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 8px solid var(--bio-green); }
+    .header img { max-width: 200px; margin-bottom: 15px; }
+    h1 { color: var(--bio-blue); margin: 0; font-size: 28px; text-transform: uppercase; }
+    p.subtitle { color: var(--bio-green); font-size: 18px; margin-top: 5px; font-weight: bold; }
+    
+    .intro { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; line-height: 1.5; color: #555; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    
+    .slot-card { background: white; border-left: 6px solid var(--bio-yellow); padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
+    .slot-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-left-color: var(--bio-blue); }
+    .slot-card h3 { margin: 0 0 10px 0; color: var(--bio-blue); font-size: 20px; }
+    .slot-date { display: inline-block; background: #eef3eb; color: var(--bio-green); padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+    .slot-desc { color: #555; line-height: 1.5; margin: 0; }
+    
+    .loading { text-align: center; color: #888; font-style: italic; padding: 40px; font-size: 16px; }
+    .empty { text-align: center; color: var(--bio-blue); font-weight: bold; padding: 30px; background: white; border-radius: 8px; font-size: 16px; border: 1px dashed #ccc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://github.com/C4m1LL3570V/Images/blob/main/Biocoop%20Jaur%C3%A8s.png?raw=true" alt="Biocoop Jean Jaurès">
+      <h1>Planning des Animations</h1>
+      <p class="subtitle">LOCAL FRIDAY • Semaine 48</p>
+    </div>
+
+    <div class="intro">
+      Venez rencontrer nos producteurs locaux en magasin (dégustations, présentation des savoir-faire). <br>
+      <strong>Rappel solidaire :</strong> Les vendredi 27 et samedi 28 novembre, les marges sur nos produits locaux seront reversées à <em>La Bio Toulousaine</em> et <em>Joïa</em>.
+    </div>
+    
+    <div id="planning-container">
+      <div class="loading">Recherche des producteurs présents... 🌱</div>
+    </div>
+  </div>
+
+  <script>
+    // L'URL de votre Apps Script avec l'ajout de "?api=true" à la fin
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzA98ySyOLxS7_Q_9jLBh7BiniqpECBDhDnuZmn7X79NLeWiXelrx5TFHtioo9FhrK1/exec?api=true';
+
+    async function fetchPlanning() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        displayPlanning(data);
+      } catch (error) {
+        document.getElementById('planning-container').innerHTML = 
+          '<div class="empty">Le programme est en cours de chargement. Veuillez rafraîchir la page dans quelques instants.</div>';
+      }
+    }
+
+    function displayPlanning(slots) {
+      const container = document.getElementById('planning-container');
+      container.innerHTML = '';
+
+      if (slots.length === 0) {
+        container.innerHTML = '<div class="empty">Le programme des animations est en cours de finalisation ! Revenez très vite pour le découvrir.</div>';
+        return;
+      }
+
+      slots.forEach(slot => {
+        const card = document.createElement('div');
+        card.className = 'slot-card';
+        card.innerHTML = `
+          <div class="slot-date">📅 ${slot.date} | ${slot.creneau}</div>
+          <h3>${slot.producteur}</h3>
+          <p class="slot-desc">✨ <strong>Animation :</strong> ${slot.animation}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Lancement de la récupération des données au chargement de la page
+    fetchPlanning();
+  </script>
+</body>
+</html>
