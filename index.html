@@ -10,12 +10,13 @@
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--light-bg); color: #333; margin: 0; padding: 20px; }
     .container { max-width: 800px; margin: auto; }
     
-    .header { text-align: center; margin-bottom: 30px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 8px solid var(--bio-green); }
-    .header img { max-width: 200px; margin-bottom: 15px; }
+    .header { text-align: center; margin-bottom: 20px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 8px solid var(--bio-green); }
+    .header img.logo { max-width: 200px; margin-bottom: 15px; }
     h1 { color: var(--bio-blue); margin: 0; font-size: 28px; text-transform: uppercase; }
     p.subtitle { color: var(--bio-green); font-size: 18px; margin-top: 5px; font-weight: bold; }
     
-    .intro { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; line-height: 1.5; color: #555; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .intro { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; line-height: 1.6; color: #555; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .poster-img { width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block; margin-left: auto; margin-right: auto; border: 1px solid #eee; }
     
     .slot-card { background: white; border-left: 6px solid var(--bio-yellow); padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
     .slot-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-left-color: var(--bio-blue); }
@@ -30,13 +31,16 @@
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://github.com/C4m1LL3570V/Images/blob/main/Biocoop%20Jaur%C3%A8s.png?raw=true" alt="Biocoop Jean Jaurès">
+      <img src="https://github.com/C4m1LL3570V/Images/blob/main/Biocoop%20Jaur%C3%A8s.png?raw=true" alt="Biocoop Jean Jaurès" class="logo">
       <h1>Planning des Animations</h1>
       <p class="subtitle">LOCAL FRIDAY • Semaine 48</p>
     </div>
 
     <div class="intro">
-      Venez rencontrer nos producteurs locaux en magasin (dégustations, présentation des savoir-faire). <br>
+      <!-- Intégration de l'affiche Local Friday -->
+      <img src="https://raw.githubusercontent.com/C4m1LL3570V/local_friday/main/LOCAL%20FRIDAY.jpg" alt="Affiche Local Friday" class="poster-img">
+      
+      Venez rencontrer nos producteurs locaux en magasin pour des dégustations et la présentation de leurs savoir-faire ! <br>
       <strong>Rappel solidaire :</strong> Les vendredi 27 et samedi 28 novembre, les marges sur nos produits locaux seront reversées à <em>La Bio Toulousaine</em> et <em>Joïa</em>.
     </div>
     
@@ -46,7 +50,6 @@
   </div>
 
   <script>
-    // L'URL de votre Apps Script avec l'ajout de "?api=true" à la fin
     const API_URL = 'https://script.google.com/macros/s/AKfycbzA98ySyOLxS7_Q_9jLBh7BiniqpECBDhDnuZmn7X79NLeWiXelrx5TFHtioo9FhrK1/exec?api=true';
 
     async function fetchPlanning() {
@@ -81,7 +84,6 @@
       });
     }
 
-    // Lancement de la récupération des données au chargement de la page
     fetchPlanning();
   </script>
 </body>
