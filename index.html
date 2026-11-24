@@ -15,13 +15,63 @@
     h1 { color: var(--bio-blue); margin: 0; font-size: 28px; text-transform: uppercase; }
     p.subtitle { color: var(--bio-green); font-size: 18px; margin-top: 5px; font-weight: bold; }
     
-    .intro { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; line-height: 1.6; color: #555; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .intro { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; line-height: 1.6; color: #555; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .poster-img { width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block; margin-left: auto; margin-right: auto; border: 1px solid #eee; }
     
+    /* Encart Promotions */
+    .promo-banner {
+      background: linear-gradient(135deg, #fffdf5 0%, #fff6d6 100%);
+      border: 2px solid var(--bio-yellow);
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(244, 170, 0, 0.12);
+    }
+    .promo-banner h2 {
+      margin: 0 0 12px 0;
+      color: var(--bio-blue);
+      font-size: 19px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 600px) {
+      .promo-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .promo-item {
+      background: white;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border-left: 5px solid var(--bio-green);
+      font-size: 14.5px;
+      line-height: 1.45;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+    .promo-item.weekend { border-left-color: var(--bio-blue); }
+    .promo-highlight {
+      display: inline-block;
+      background: var(--bio-yellow);
+      color: #fff;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .promo-item.weekend .promo-highlight { background: var(--bio-blue); }
+
+    /* Cartes d'animations */
     .slot-card { background: white; border-left: 6px solid var(--bio-yellow); padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
     .slot-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-left-color: var(--bio-blue); }
+    .slot-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
     .slot-card h3 { margin: 0 0 10px 0; color: var(--bio-blue); font-size: 20px; }
-    .slot-date { display: inline-block; background: #eef3eb; color: var(--bio-green); padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+    .slot-date { display: inline-block; background: #eef3eb; color: var(--bio-green); padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+    .promo-badge { display: inline-block; background: #fff3cd; color: #b47b00; border: 1px solid var(--bio-yellow); padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 13px; }
     .slot-desc { color: #555; line-height: 1.5; margin: 0; }
     
     .loading { text-align: center; color: #888; font-style: italic; padding: 40px; font-size: 16px; }
@@ -42,6 +92,21 @@
       
       Venez rencontrer nos producteurs locaux en magasin pour des dégustations et la présentation de leurs savoir-faire ! <br>
       <strong>Rappel solidaire :</strong> Les vendredi 27 et samedi 28 novembre, les marges sur nos produits locaux seront reversées à <em>La Bio Toulousaine</em> et <em>Joïa</em>.
+    </div>
+
+    <!-- Encart Remises Local Friday -->
+    <div class="promo-banner">
+      <h2>🏷️ Offres spéciales Local Friday</h2>
+      <div class="promo-grid">
+        <div class="promo-item">
+          <div class="promo-highlight">-10 % lors des animations</div><br>
+          Profitez de <strong>10 % de remise</strong> sur les produits des producteurs présents en magasin pendant leur animation.
+        </div>
+        <div class="promo-item weekend">
+          <div class="promo-highlight">-10 % Vendredi & Samedi</div><br>
+          Les <strong>27 et 28 novembre</strong>, bénéficiez de <strong>10 % de remise sur toute la production locale</strong> du magasin !
+        </div>
+      </div>
     </div>
     
     <div id="planning-container">
@@ -76,7 +141,10 @@
         const card = document.createElement('div');
         card.className = 'slot-card';
         card.innerHTML = `
-          <div class="slot-date">📅 ${slot.date} | ${slot.creneau}</div>
+          <div class="slot-top">
+            <div class="slot-date">📅 ${slot.date} | ${slot.creneau}</div>
+            <div class="promo-badge">🏷️ -10 % pendant l'animation</div>
+          </div>
           <h3>${slot.producteur}</h3>
           <p class="slot-desc">✨ <strong>Animation :</strong> ${slot.animation}</p>
         `;
